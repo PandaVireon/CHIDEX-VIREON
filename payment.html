@@ -409,6 +409,30 @@
 </div>
 </div>
 
+    </script>
+<div id="notice-modal" style="position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);">
+    <div style="background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 35px; padding: 40px 25px; width: 90%; max-width: 340px; text-align: center; box-shadow: 0 40px 100px rgba(0,0,0,0.8);">
+        
+        <div style="width: 80px; height: 80px; background: rgba(255, 77, 77, 0.1); border: 1px solid rgba(255, 77, 77, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px auto;">
+            <i class="fas fa-times" style="color: #ff4d4d; font-size: 35px;"></i>
+        </div>
+
+        <h2 style="color: #fff; font-weight: 900; font-size: 16px; letter-spacing: 2px; margin-bottom: 15px; text-transform: uppercase;">Security Alert</h2>
+        
+        <p style="color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 700; line-height: 1.6; margin-bottom: 20px;">
+            DO NOT use <span style="color: #ff4d4d;">OPAY BANK</span> for payments or withdrawals. 
+        </p>
+        
+        <p style="color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 500; line-height: 1.5; padding: 0 10px;">
+            Opay Microfinance Bank has NOT been added to Vireon's official payment and withdrawal gateway. Please use a supported commercial bank to avoid transaction failure.
+        </p>
+
+        <button onclick="closeNotice()" style="width: 100%; background: #fff; color: #000; padding: 18px; border-radius: 18px; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-top: 30px; border: none; cursor: pointer;">
+            UNDERSTOOD
+        </button>
+    </div>
+</div>
+
 <script>
     // 1. Firebase Configuration (Kept perfectly matching your structural format)
    const firebaseConfig = {
@@ -617,6 +641,37 @@ Kindly confirm and activate my account.`;
         setTimeout(cycleActivityFeed, 1500);
         setInterval(cycleActivityFeed, 9500);
     });
+
+    // 8. Single Unified Load Event
+    window.addEventListener('DOMContentLoaded', () => {
+        watchAdminSettings();
+        startTimer(10 * 60, document.querySelector('#countdown'));
+        setTimeout(cycleActivityFeed, 2000);
+        setInterval(cycleActivityFeed, 10000);
+    });
+    // This runs as soon as the window loads
+window.addEventListener('load', function() {
+    const wrapper = document.getElementById('main-wrapper');
+    const modal = document.getElementById('notice-modal');
+    
+    // Blur everything behind the modal immediately
+    if (wrapper) {
+        wrapper.style.filter = 'blur(15px)';
+        wrapper.style.pointerEvents = 'none'; // Prevents clicking behind
+    }
+});
+
+function closeNotice() {
+    const wrapper = document.getElementById('main-wrapper');
+    const modal = document.getElementById('notice-modal');
+    
+    // Remove the modal and the blur
+    modal.style.display = 'none';
+    if (wrapper) {
+        wrapper.style.filter = 'none';
+        wrapper.style.pointerEvents = 'auto';
+    }
+}
 </script>
 </body>
 </html>
